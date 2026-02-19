@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.nawid</groupId>
-	<artifactId>product</artifactId>
+	<artifactId>onlineshop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>product</name>
-	<description>This is for showing Layer Architecture</description>
+	<name>online-shop</name>
+	<description>This is an online-shop rest api demo</description>
 	<url/>
 	<licenses>
 		<license/>

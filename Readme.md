@@ -35,12 +35,12 @@ CREATE DATABASE shop;
 ### 3. Configure Environment Variables
 Update application.properties: This is for MySQL config.
 
-spring.datasource.url=jdbc:mysql://localhost:3306/shop
-spring.datasource.username=YOUR_DB_USERNAME
-spring.datasource.password=YOUR_DB_PASSWORD
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+* spring.datasource.url=jdbc:mysql://localhost:3306/shop
+* spring.datasource.username=YOUR_DB_USERNAME
+* spring.datasource.password=YOUR_DB_PASSWORD
+* spring.jpa.hibernate.ddl-auto=update
+* spring.jpa.show-sql=true
+* spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 
 ### 4. Run Application
 your application runs on: http://localhost:8080
@@ -59,23 +59,23 @@ still not added
 
 ### 1. Products
 
-| Method | Endpoint                | Access | Description       |
-| ------ |-------------------------| ------ | ----------------- |
-| GET    | `/api/v1/products`      | Public | Get all products  |
-| GET    | `/api/v1/products/{id}` | Public | Get product by ID |
-| POST   | `/api/v1/products`      | ADMIN  | Create product    |
-| PUT    | `/api/v1/products/{id}` | ADMIN  | Update product    |
-| DELETE | `/api/v1/products/{id}` | ADMIN  | Delete product    |
+| Method | Endpoint          | Access | Description       |
+| ------ |-------------------| ------ | ----------------- |
+| GET    | `/api/products`   | Public | Get all products  |
+| GET    | `/api/products/{id}` | Public | Get product by ID |
+| POST   | `/api/products`   | ADMIN  | Create product    |
+| PUT    | `/api/products/{id}` | ADMIN  | Update product    |
+| DELETE | `/api/products/{id}` | ADMIN  | Delete product    |
 
 ### 2. Orders
 
-| Method | Endpoint              | Access        | Description                   |
-| ------ |-----------------------| ------------- | ----------------------------- |
-| POST   | `/api/v1/orders/buy`  | USER, ADMIN   | Buy product                   |
-| GET    | `/api/v1/orders`      | ADMIN         | Get all orders                |
-| GET    | `/api/v1/orders/my`   | USER, ADMIN   | Get logged-in user's orders   |
-| GET    | `/api/v1/orders/{id}` | Authenticated | Get order by ID               |
-| DELETE | `/api/v1/orders/{id}` | Authenticated | Delete order (owner or admin) |
+| Method | Endpoint        | Access        | Description                   |
+| ------ |-----------------| ------------- | ----------------------------- |
+| POST   | `/api/orders/buy` | USER, ADMIN   | Buy product                   |
+| GET    | `/api/orders`   | ADMIN         | Get all orders                |
+| GET    | `/api/orders/my` | USER, ADMIN   | Get logged-in user's orders   |
+| GET    | `/api/orders/{id}` | Authenticated | Get order by ID               |
+| DELETE | `/api/orders/{id}` | Authenticated | Delete order (owner or admin) |
 
 ## Database Tables
 
