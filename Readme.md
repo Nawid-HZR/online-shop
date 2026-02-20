@@ -77,6 +77,14 @@ still not added
 | GET    | `/api/orders/{id}` | Authenticated | Get order by ID               |
 | DELETE | `/api/orders/{id}` | Authenticated | Delete order (owner or admin) |
 
+### 3. Auth
+| Method | Endpoint             | Access | Description            |
+|--------|----------------------|--------|------------------------|
+| POST   | `/api/auth/register` | PUBLIC | Register a user        |
+| POST   | `/api/auth/login`    | PUBLIC | Login as user or admin |
+
+
+
 ## Database Tables
 
 ### users
@@ -106,6 +114,6 @@ still not added
 
 * JWT Authentication
 * Pagination for orders/products
-* Global exception handler
+* Payment
 * Unit & Integration tests
-* API documentation (Swagger)~~``
+* API documentation (Swagger)

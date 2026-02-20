@@ -2,6 +2,7 @@ package com.nawid.onlineshop.service;
 
 import com.nawid.onlineshop.dto.ProductDto;
 import com.nawid.onlineshop.entity.Product;
+import com.nawid.onlineshop.exception.ResourceNotFoundException;
 import com.nawid.onlineshop.repo.ProductRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,14 +71,14 @@ public class ProductService implements IProductService{
 
     @Override
     public ProductDto getProduct(int id) {
-        Product product = repo.findById(id).orElseThrow(()->new RuntimeException("Resource not found with id "+ id));
+        Product product = repo.findById(id).orElseThrow(()->new ResourceNotFoundException("Product not found"));
         return modelMapper.map(product, ProductDto.class);
     }
 
     @Override
     public ProductDto updateProduct(ProductDto pdto, int id) {
 
-        Product product = repo.findById(id).orElseThrow(()->new RuntimeException("Resource not found with id "+ id));
+        Product product = repo.findById(id).orElseThrow(()->new ResourceNotFoundException("Product not found"));
         product.setName(pdto.getName());
         product.setDescription(pdto.getDescription());
         product.setPrice(pdto.getPrice());
@@ -91,7 +92,7 @@ public class ProductService implements IProductService{
 
     @Override
     public void deleteProduct(int id) {
-        repo.findById(id).orElseThrow(()->new RuntimeException("Resource not found with id "+ id));
+        repo.findById(id).orElseThrow(()->new ResourceNotFoundException("Product not exists"));
         repo.deleteById(id);
     }
 

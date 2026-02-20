@@ -5,12 +5,17 @@ import com.nawid.onlineshop.dto.OrderRequest;
 import com.nawid.onlineshop.entity.Order;
 import com.nawid.onlineshop.entity.Product;
 import com.nawid.onlineshop.entity.User;
+import com.nawid.onlineshop.exception.AccessDeniedException;
+import com.nawid.onlineshop.exception.InsufficientStockException;
+import com.nawid.onlineshop.exception.InvalidRequestException;
+import com.nawid.onlineshop.exception.ResourceNotFoundException;
 import com.nawid.onlineshop.repo.OrderRepo;
 import com.nawid.onlineshop.repo.ProductRepo;
 import com.nawid.onlineshop.repo.UserRepo;
 import com.nawid.onlineshop.security.SecurityUtil;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -40,14 +45,14 @@ public class OrderService implements IOrderService{
     @Transactional
     public OrderDto buyProduct(OrderRequest request, String username) {
 
-        User user = userRepo.findByUsername(username).orElseThrow(()-> new RuntimeException("user not found"));
-        Product product = productRepo.findById(request.getProductId()).orElseThrow(()-> new RuntimeException("product not found" ));
+        User user = userRepo.findByUsername(username).orElseThrow(()-> new ResourceNotFoundException("user not found"));
+        Product product = productRepo.findById(request.getProductId()).orElseThrow(()-> new ResourceNotFoundException("product not found") );
 
         if (request.getQuantity()<=0){
-            throw new RuntimeException("Product can not zero or less");
+            throw new InvalidRequestException("Product can not be zero or less");
         }
         if (product.getAmount() < request.getQuantity()) {
-            throw new RuntimeException("Not enough stock");
+            throw new InsufficientStockException("Not enough stock");
         }
 
         product.setAmount(product.getAmount()-request.getQuantity());
@@ -87,10 +92,10 @@ public class OrderService implements IOrderService{
     @Override
     public OrderDto getOrderById(Integer id, String username) {
         Order order = orderRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
 
         if (!order.getUser().getUsername().equals(username) && !securityUtil.isAdmin()) {
-            throw new RuntimeException("Access denied");
+            throw new AccessDeniedException("Access denied");
         }
 
         return mapper.map(order, OrderDto.class);
@@ -100,10 +105,10 @@ public class OrderService implements IOrderService{
     public void deleteOrder(Integer id, String username) {
 
         Order order = orderRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
 
         if (!order.getUser().getUsername().equals(username) && !securityUtil.isAdmin()) {
-            throw new RuntimeException("Access denied");
+            throw new AccessDeniedException("Access denied");
         }
 
         orderRepo.delete(order);
